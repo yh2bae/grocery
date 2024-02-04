@@ -2,13 +2,32 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/data.dart';
 
-class ProductDetail extends StatelessWidget {
+class ProductDetail extends StatefulWidget {
   const ProductDetail({
     Key? key,
     required this.product,
   }) : super(key: key);
 
   final Product product;
+
+  @override
+  State<ProductDetail> createState() => _ProductDetailState();
+}
+
+class _ProductDetailState extends State<ProductDetail> {
+  int count = 1;
+
+  void addCount() {
+    count = count + 1;
+    setState(() {});
+  }
+
+  void removeCount() {
+    if (count != 0) {
+      count = count - 1;
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +59,7 @@ class ProductDetail extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            product.name,
+            widget.product.name,
             style: const TextStyle(
               fontSize: 50,
               fontWeight: FontWeight.w700,
@@ -48,12 +67,12 @@ class ProductDetail extends StatelessWidget {
           ),
           Center(
             child: Hero(
-                tag: product.image,
+                tag: widget.product.image,
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.45,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(product.image),
+                      image: AssetImage(widget.product.image),
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -65,7 +84,7 @@ class ProductDetail extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  'Rp. ${product.price}',
+                  'Rp. ${widget.product.price}',
                   style: const TextStyle(
                     color: Colors.blue,
                     fontSize: 20,
@@ -73,7 +92,7 @@ class ProductDetail extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  ' / ${product.quantity}',
+                  ' / ${widget.product.quantity}',
                   style: const TextStyle(
                     color: Colors.blue,
                     fontSize: 20,
@@ -88,7 +107,7 @@ class ProductDetail extends StatelessWidget {
               color: Colors.grey[200],
               padding: const EdgeInsets.all(20),
               child: Text(
-                product.description,
+                widget.product.description,
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -112,23 +131,23 @@ class ProductDetail extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: removeCount,
                         icon: const Icon(
                           Icons.remove_circle_outline,
                           color: Colors.white,
                           size: 30,
                         ),
                       ),
-                      const Text(
-                        '1',
-                        style: TextStyle(
+                      Text(
+                        count.toString(),
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 30,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: addCount,
                         icon: const Icon(Icons.add_circle_outline,
                             color: Colors.white, size: 30),
                       ),
@@ -136,25 +155,24 @@ class ProductDetail extends StatelessWidget {
                   ),
                 ),
                 Center(
-                  child: Container(
-                    width: 190,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Pesan',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
+                    child: Container(
+                  width: 190,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Pesan',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
-                  )
-                )
+                  ),
+                ))
               ],
             ),
           )
